@@ -1,11 +1,39 @@
 package com.example.ucp2.ui.viewmodel.barang
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.Barang
 import com.example.ucp2.repository.repoBarang
+import kotlinx.coroutines.launch
 
 class barangViewModel(private val repoBarang: repoBarang) : ViewModel() {
 
+
+    var uiState by mutableStateOf(barangUIState())
+
+    // Memperbarui state berdasarkan input pengguna
+    fun updateState(barangEvent: barangEvent){
+        uiState = uiState.copy(
+            barangEvent = barangEvent,
+        )
+    }
+    // Validasi data import pengguna
+    private fun validateFields(): Boolean{
+        val  event = uiState.barangEvent
+        val errorState = FormErrorState(
+            id = if (event.id.isNotEmpty())  null else "ID tidak boleh kosong",
+            nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
+            deskripsi = if (event.deskripsi.isNotEmpty()) null else "Deskripsi tidak boleh kosong",
+            harga = if (event.harga == 0.0) null else "Harga tidak boleh kosong",
+            stok = if (event.stok > 0) null else "Stok tidak boleh kosong",
+            namasupplier = if (event.namasupplier.isNotEmpty()) null else "Nama Supplier tidak boleh kosong",
+        )
+        uiState = uiState.copy(isEntryValid = errorState)
+        return errorState.isValid()
+    }
 }
 
 data class barangUIState(
@@ -43,7 +71,7 @@ data class barangEvent(
     val id: String = "",
     val nama: String = "",
     val deskripsi: String = "",
-    val harga: String = "",
-    val stok: String = "",
+    val harga: Double = 0.0,
+    val stok: Int = 0,
     val namasupplier: String = "",
 )
