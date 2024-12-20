@@ -9,7 +9,7 @@ data class Barang(
     val id: String,
     val nama: String,
     val deskripsi: String,
-    val harga: String,
-    val stok: String,
+    val harga: Double,
+    val stok: Int,
     val namasupplier: String,
 )
