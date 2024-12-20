@@ -59,6 +59,11 @@ class barangViewModel(private val repoBarang: repoBarang) : ViewModel() {
             )
         }
     }
+
+    //Reset pesan Snackbar setelah ditampilkan
+    fun resetSnackBarMessage(){
+        uiState = uiState.copy(snackBarMessage = null)
+    }
 }
 
 data class barangUIState(
