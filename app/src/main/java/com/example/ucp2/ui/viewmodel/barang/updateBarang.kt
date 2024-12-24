@@ -38,6 +38,21 @@ class updateBarang(
             barangEvent = barangEvent
         )
     }
+
+    fun validateFields(): Boolean {
+        val event = updateUIState.barangEvent
+        val errorState = FormErrorState(
+            id = if (event.id.isNotEmpty())  null else "ID tidak boleh kosong",
+            nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
+            deskripsi = if (event.deskripsi.isNotEmpty()) null else "Deskripsi tidak boleh kosong",
+            harga = if (event.harga.isNotEmpty()) null else "Harga tidak boleh kosong",
+            stok = if (event.stok.isNotEmpty()) null else "Stok tidak boleh kosong",
+            namasupplier = if (event.namasupplier.isNotEmpty()) null else "Nama Supplier tidak boleh kosong"
+        )
+
+        updateUIState = updateUIState.copy(isEntryValid = errorState)
+        return errorState.isValid()
+    }
 }
 
 fun Barang.toUIStateMhs(): barangUIState = barangUIState(
