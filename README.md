@@ -7,3 +7,5 @@
 <img width="221" alt="updateBarang" src="https://github.com/user-attachments/assets/804a2ebf-50a8-45b6-8d0e-73abcff8a063" />
 <img width="221" alt="deleteBarang" src="https://github.com/user-attachments/assets/ca5a2570-8e2e-4be9-a65f-a0e77836939c" />
 
+Link Video OneDrive:
+https://umyac-my.sharepoint.com/:v:/g/personal/wisnu_dwi_ft22_mail_umy_ac_id/EXsI83-DH_lMkHwWuesQE0cBxO2y8nzOOsU6fwbD7UOc3w?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=Pb4b7X
