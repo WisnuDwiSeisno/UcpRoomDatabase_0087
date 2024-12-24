@@ -51,6 +51,14 @@ class detailBarangVM(
                 isLoading = true,
             ),
         )
+
+    fun deleteBarang() {
+        detailUiState.value.detailUiEvent.toBarangEntity().let {
+            viewModelScope.launch {
+                repoBarang.deleteBarang(it)
+            }
+        }
+    }
 }
 
 data class DetailUiState(
