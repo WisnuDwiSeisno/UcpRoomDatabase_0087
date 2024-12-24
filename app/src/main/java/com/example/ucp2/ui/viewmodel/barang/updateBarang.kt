@@ -53,6 +53,35 @@ class updateBarang(
         updateUIState = updateUIState.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
+
+    fun updateData() {
+        val currentEvent = updateUIState.barangEvent
+
+        if (validateFields()) {
+            viewModelScope.launch {
+                try {
+                    repoBarang.updateBarang(currentEvent.toBarangEntity())
+                    updateUIState = updateUIState.copy(
+                        snackBarMessage = "Data berhasil diupdate",
+                        isEntryValid = FormErrorState() // Reset error state
+                    )
+                } catch (e: Exception) {
+                    updateUIState = updateUIState.copy(
+                        snackBarMessage = "Data Gagal Diupdate"
+                    )
+                }
+            }
+        } else {
+            updateUIState = updateUIState.copy(
+                snackBarMessage = "Data Gagal diupdate"
+            )
+        }
+    }
+
+
+    fun resetSnackBarMessage() {
+        updateUIState = updateUIState.copy(snackBarMessage = null)
+    }
 }
 
 fun Barang.toUIStateMhs(): barangUIState = barangUIState(
