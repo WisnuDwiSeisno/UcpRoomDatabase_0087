@@ -15,6 +15,34 @@ import kotlinx.coroutines.flow.stateIn
 class homeBarang(
     private val repoBarang: repoBarang
 ) : ViewModel() {
+    val homeUiState : StateFlow<HomeUiState> = repoBarang.getAllBarang()
+        .filterNotNull()
+        .map {
+            HomeUiState(
+                listBarang = it.toList(),
+                isLoading = false,
+            )
+        }
+        .onStart {
+            emit(HomeUiState(isLoading = true))
+            delay(900)
+        }
+        .catch {
+            emit(
+                HomeUiState(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = it.message ?: "Terjadi Kesalahan"
+                )
+            )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = HomeUiState(
+                isLoading = true,
+            )
+        )
 }
 
 data class HomeUiState(
