@@ -27,8 +27,8 @@ class barangViewModel(private val repoBarang: repoBarang) : ViewModel() {
             id = if (event.id.isNotEmpty())  null else "ID tidak boleh kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
             deskripsi = if (event.deskripsi.isNotEmpty()) null else "Deskripsi tidak boleh kosong",
-            harga = if (event.harga == 0.0) null else "Harga tidak boleh kosong",
-            stok = if (event.stok > 0) null else "Stok tidak boleh kosong",
+            harga = if (event.harga.isNotEmpty()) null else "Harga tidak boleh kosong",
+            stok = if (event.stok.isNotEmpty()) null else "Stok tidak boleh kosong",
             namasupplier = if (event.namasupplier.isNotEmpty()) null else "Nama Supplier tidak boleh kosong",
         )
         uiState = uiState.copy(isEntryValid = errorState)
@@ -91,8 +91,8 @@ fun barangEvent.toBarangEntity(): Barang = Barang(
     id = id,
     nama = nama,
     deskripsi = deskripsi,
-    harga = harga,
-    stok = stok,
+    harga = harga.toDoubleOrNull()?.takeIf { it > 0 } ?: 0.0,
+    stok = stok.toIntOrNull()?.takeIf { it >= 0 } ?: 0,
     namasupplier = namasupplier
 )
 
@@ -101,7 +101,7 @@ data class barangEvent(
     val id: String = "",
     val nama: String = "",
     val deskripsi: String = "",
-    val harga: Double = 0.0,
-    val stok: Int = 0,
+    val harga: String = "",
+    val stok: String = "",
     val namasupplier: String = "",
 )
