@@ -21,6 +21,36 @@ class detailBarangVM(
     savedStateHandle: SavedStateHandle,
     private val repoBarang: repoBarang,
 ) : ViewModel() {
+    private val _id: String = checkNotNull(savedStateHandle[DestinasiDetail.id])
+
+    val detailUiState: StateFlow<DetailUiState> = repoBarang.getBarang(_id)
+        .filterNotNull()
+        .map {
+            DetailUiState(
+                detailUiEvent = it.toDetailUiEvent(),
+                isLoading = false,
+            )
+        }
+        .onStart {
+            emit(DetailUiState(isLoading = true))
+            delay(600)
+        }
+        .catch {
+            emit(
+                DetailUiState(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = it.message ?: "Terjadi Kesalahan",
+                )
+            )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(2000),
+            initialValue = DetailUiState(
+                isLoading = true,
+            ),
+        )
 }
 
 data class DetailUiState(
