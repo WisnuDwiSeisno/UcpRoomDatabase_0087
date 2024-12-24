@@ -32,6 +32,12 @@ class updateBarang(
                 .toUIStateMhs()
         }
     }
+
+    fun updateState(barangEvent: barangEvent) {
+        updateUIState = updateUIState.copy(
+            barangEvent = barangEvent
+        )
+    }
 }
 
 fun Barang.toUIStateMhs(): barangUIState = barangUIState(
